@@ -10,6 +10,8 @@ import { MenuPage } from '../pages/menu/menu';
 import { TreeViewPage } from '../pages/tree-view/tree-view';
 import { EditorPage } from '../pages/editor/editor';
 import { NotificationBarPage } from '../pages/notification-bar/notification-bar';
+import { EditorWindowProvider } from '../providers/editor-window/editor-window';
+import { MonacoServiceProvider } from '../providers/monaco-service/monaco-service';
 
 @NgModule({
   declarations: [
@@ -19,10 +21,12 @@ import { NotificationBarPage } from '../pages/notification-bar/notification-bar'
     TreeViewPage,
     EditorPage,
     NotificationBarPage
+
   ],
+
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,11 +36,19 @@ import { NotificationBarPage } from '../pages/notification-bar/notification-bar'
     TreeViewPage,
     EditorPage,
     NotificationBarPage
+
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    EditorWindowProvider,
+    MonacoServiceProvider,
+
+
+
+
   ]
 })
 export class AppModule {}

@@ -4,10 +4,12 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowJs": true,
     "lib": [
       "dom",
       "es2015"
     ],
+    "types":["node","jasmine"],
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -20,9 +22,9 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "src/**/*.spec.ts",
-    "src/**/__tests__/*.ts"
+    "node_modules"
+    // "src/**/*.spec.ts",
+    // "src/**/__tests__/*.ts"
   ],
   "compileOnSave": false,
   "atom": {
