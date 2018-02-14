@@ -1,0 +1,159 @@
+page-editor {
+  .editor{
+      background-color: inherit;
+      width: 75%;
+      height: 96%;
+      float: left;
+     /* clear: both;
+      */
+      position: relative;
+      overflow-x: auto;
+ }
+  .editor ::-webkit-scrollbar {
+      display: none;
+ }
+  .editor-tab-section{
+      background-color: #f0f0f1;
+      border-bottom: 1px solid #f9fafb;
+      text-align: center;
+      width: 1024px;
+      height: 48px;
+      line-height: 2.6;
+      font-size: 14px;
+      margin-left: 1px;
+      overflow-x: auto;
+      padding-right: 10px;
+ }
+  ul.tabs-header {
+      padding: 0px;
+      margin: 0px;
+      border-bottom: 1px solid #DDD;
+      height: 48px;
+      max-width: 100vw;
+ }
+  ul.tabs-header .close {
+      visibility: visible;
+      margin: 0 5px 0 0px;
+      border: none;
+      background: transparent;
+ }
+  ul.tabs-header li.active {
+      color: #555;
+      cursor: default;
+      background-color: #f9fafb;
+      border: 1px solid #DDD;
+      border-bottom-color: rgba(0, 0, 0, 0);
+      height: 47px;
+ }
+  ul.tabs-header li, .inner-tab {
+      list-style: none;
+      float: left;
+      margin-bottom: -1px;
+      display: block;
+      cursor: pointer;
+      margin-right: 0px;
+      text-indent: 5px;
+      border-radius: 0;
+      position: relative;
+      padding: 14px 6px;
+      color: #555;
+      background-color: #f0f0f1;
+      border: 1px solid rgba(0, 0, 0, 0);
+      transition: background-color 0.2s linear;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+ }
+  #tab-cont{
+      width: 80vw;
+      height: 49px;
+      background: #f9fafb;
+      border-left: 1px solid #fff;
+      overflow: hidden;
+      overflow-x: scroll;
+ }
+  .inner-tab{
+      list-style: none;
+      float: left;
+      margin-bottom: -1px;
+      display: block;
+      cursor: pointer;
+      margin-right: 1px;
+      text-indent: 5px;
+      border-radius: 0;
+      position: relative;
+      padding: 14px 5px;
+      color: #555;
+      background-color: #FFF;
+      border: 1px solid rgba(0, 0, 0, 0);
+      background: rgba(0, 0, 0, 0);
+      transition: background-color 0.2s linear;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+ }
+  .cd-tabs-navigation{
+      margin: 0;
+      padding: 0;
+ }
+  .cd-tabs{
+      width: 100%;
+      height: 46px;
+      overflow: hidden;
+ }
+  div.scrollmenu {
+      background-color: #f9fafb;
+      overflow: hidden;
+      height: 48px;
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      background: #f0f0f1;
+      border-bottom: 1px solid #DDD;
+      -ms-overflow-style: none;
+      // IE 10+ overflow: -moz-scrollbars-none;
+      // Firefox
+ }
+  .tab{
+      height: 48px;
+      margin-right: 1px;
+      margin-left: 0px;
+      text-align: center;
+      margin-top: 0;
+      display: inline-block;
+      padding: 1em 2em;
+      border-left: 1px solid #f9fafb;
+      color: #555;
+      background-color: #f0f0f1;
+      transition: background-color 0.2s linear;
+ }
+  .active{
+      color: #555;
+      cursor: default;
+      background-color: #f9fafb;
+      border: 1px solid #DDD;
+      border-bottom-color: rgba(0, 0, 0, 0);
+      height: 47px;
+ }
+  #parent-body{
+      width: 100%;
+      min-height: 45px;
+      background: transparent;
+ }
+  .hide{
+      display:none;
+ }
+  .close{
+      float: right;
+      margin-left: 4px;
+      background: none;
+      font-size: inherit;
+      line-height: 0.9;
+      position: relative;
+      left: 10px;
+ }
+  ::-webkit-scrollbar {
+      display: none;
+ }
+}

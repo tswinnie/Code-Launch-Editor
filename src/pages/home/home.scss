@@ -1,3 +1,22 @@
 page-home {
 
+  .ion-page {
+    left: 0;
+    top: 0;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background: #fff;
+}
+
+.toolbar-background-ios {
+  background: #f9fafb;
+}
+
+.header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios {
+  border-style: solid;
+  border-color: #f0f0f1;
+}
 }

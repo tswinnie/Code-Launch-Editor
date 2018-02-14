@@ -1,0 +1,94 @@
+page-menu {
+
+      .menu{
+        width: 5%;
+        height: 96%;
+        background-color: #f9fafb;
+        float: left;
+        // -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        // -moz-box-shadow:    0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        // box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      }
+
+      .list-ios {
+        margin: -1px 0 32px;
+        margin-top: 8%;
+        border: none;
+        height: 98%;
+    }
+
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+      border: none;
+      background-color: inherit;
+    }
+
+    [icon-only] ion-icon {
+      padding: 0;
+      font-size: 1.7em;
+      line-height: .67;
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .settings-icon{
+      background: none;
+      text-align: center;
+      margin: 0 auto;
+      width: 100%;
+      font-size: 1.7em;
+      -webkit-font-smoothing: antialiased;
+      color: #282828;
+
+    }
+
+    .list-ios > .item-block:first-child {
+      border: none;
+      background: inherit;
+    }
+
+    .list-ios > .item-block:last-child, page-menu .list-ios > .item-wrapper:last-child .item-block {
+      background-color: inherit;
+      border: none;
+    }
+
+    list-ios .item-block .item-inner {
+      border: none;
+  }
+
+  .list-ios .item-block .item-inner {
+    border:none;
+  }
+
+  .item-ios{
+    background: inherit;
+    margin-bottom: 20px;
+  }
+
+  .help-icon{
+    background: none;
+    text-align: center;
+    margin: 65px auto;
+    width: 100%;
+    font-size: 1.7em;
+    position: relative;
+    bottom: 15%;
+    font-weight: bold;
+    border: none;
+    -webkit-font-smoothing: antialiased;
+    color: #282828;
+
+
+  }
+
+  .item-ios.item-block .item-inner {
+    padding-right: 8px;
+    padding-right: 8px;
+    border: none;
+    overflow: visible;
+}
+
+.icon-adjust{
+  font-size: 1.4em;
+}
+
+}

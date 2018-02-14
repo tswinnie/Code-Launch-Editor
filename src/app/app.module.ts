@@ -6,25 +6,49 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { MenuPage } from '../pages/menu/menu';
+import { TreeViewPage } from '../pages/tree-view/tree-view';
+import { EditorPage } from '../pages/editor/editor';
+import { NotificationBarPage } from '../pages/notification-bar/notification-bar';
+import { EditorWindowProvider } from '../providers/editor-window/editor-window';
+import { MonacoServiceProvider } from '../providers/monaco-service/monaco-service';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    MenuPage,
+    TreeViewPage,
+    EditorPage,
+    NotificationBarPage
+
   ],
+
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    MenuPage,
+    TreeViewPage,
+    EditorPage,
+    NotificationBarPage
+
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    EditorWindowProvider,
+    MonacoServiceProvider,
+
+
+
+
   ]
 })
 export class AppModule {}
