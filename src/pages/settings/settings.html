@@ -1,0 +1,48 @@
+<!--
+  Generated template for the SettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+      <ion-navbar>
+        <ion-title>Settings</ion-title>
+        <button ion-button (click)="closeModal()" ion-button-end>Cancel</button>
+      </ion-navbar>
+
+    </ion-header>
+
+
+    <ion-content padding class="modal-content">
+      <!-- add new file form -->
+        <form [formGroup]="optionData" (ngSubmit)="updateSettings()">
+            <ion-item>
+              <div class="form-group">
+                <label for="theme" >Editor Theme:</label>
+
+                <select class="form-control" id="theme" formControlName="themeName">
+                    <option *ngFor="let option of themes" [value]="option"  [selected]="option">{{option}}</option>
+                    <option value="vs-light" *ngIf="show">vs-light</option>
+                    <option value="vs-dark">vs-dark</option>
+                  </select>
+              </div>
+
+              <!-- <div class="form-group">
+                  <label for="theme" >Word Wrap :</label>
+                  <select class="form-control" id="wordWrap" >
+                    <option *ngFor="let wrapOptions of wordWrapOptions" [value]="wrapOptions">{{ wrapOptions }}</option>
+                  </select>
+                </div> -->
+
+                <!-- <div class="form-group">
+                    <label for="theme" >Word Wrap Column:</label>
+                    <select class="form-control" id="wordWrapColumn" >
+                      <option *ngFor="let columnOption of wordWrapColumnOptions" [value]="columnOption">{{ columnOption }}</option>
+                    </select>
+                  </div> -->
+
+            </ion-item>
+            <button ion-button type="submit" [disabled]="!optionData.valid">Save</button>
+          </form>
+    </ion-content>
