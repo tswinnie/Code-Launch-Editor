@@ -11,7 +11,7 @@ export class EditorWindowProvider {
 
 
   //initialize tab
-  tabInit(tabID: string) {
+  tabInit(tabID: string, fileExtension: string) {
       document.documentElement.style.overflow = 'hidden'; // firefox, chrome
       this.counter += 1;
       let parentContainer: any = document.getElementById('parent-node');
@@ -34,7 +34,8 @@ export class EditorWindowProvider {
       newTab.setAttribute("class", "tab");
       newTabBody.classList.add("hide");
       newTabBody.style.width = "100%";
-      newTabBody.style.height = "600px";
+      newTabBody.style.height = "100vh";
+      newTabBody.style.positon = "fixed";
       newTab.setAttribute("id", this.counter + tabID); //remove the counter when ready for production
       newTabBody.setAttribute("id", this.counter + tabID); //remove the counter when ready for production
       //add click event to new tab
@@ -62,7 +63,7 @@ export class EditorWindowProvider {
                   currentBody[p].classList.remove('hide');
               }
           }
-          this.monaco.initMonaco(newTabBody.id);
+          this.monaco.initMonaco(newTabBody.id, fileExtension);
           //scroll to new tab one container overflows
           newTab.scrollIntoView({
               behavior: "instant",

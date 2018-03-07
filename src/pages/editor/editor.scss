@@ -1,19 +1,24 @@
 page-editor {
   .editor{
-      background-color: inherit;
-      width: 75%;
-      height: 96%;
-      float: left;
-     /* clear: both;
-      */
-      position: relative;
-      overflow-x: auto;
- }
+    background-color: inherit;
+    width: 75%;
+    height: 100vh;
+    // float: left;
+    overflow-x: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 99;
+    height: 96%;
+    overflow: hidd;
+    overflow-y: auto;
+  }
+
   .editor ::-webkit-scrollbar {
       display: none;
  }
   .editor-tab-section{
-      background-color: #f0f0f1;
+      background-color: #4040C5;
       border-bottom: 1px solid #f9fafb;
       text-align: center;
       width: 1024px;
@@ -111,9 +116,10 @@ page-editor {
       -webkit-overflow-scrolling: touch;
       background: #f0f0f1;
       border-bottom: 1px solid #DDD;
+      margin-left: -1px;
       -ms-overflow-style: none;
-      // IE 10+ overflow: -moz-scrollbars-none;
-      // Firefox
+      position: fixed;
+      z-index: 99999;
  }
   .tab{
       height: 48px;
@@ -137,9 +143,14 @@ page-editor {
       height: 47px;
  }
   #parent-body{
-      width: 100%;
-      min-height: 45px;
-      background: transparent;
+    width: 100%;
+    background: transparent;
+    // height: 990px;
+    overflow: hidden;
+    // overflow-y: scroll;
+    position: fixed;
+    height: 80vh;
+    top: 10%;
  }
   .hide{
       display:none;

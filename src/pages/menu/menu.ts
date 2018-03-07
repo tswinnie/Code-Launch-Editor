@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ModalServiceProvider } from './../../providers/modal-service/modal-service';
 
 
 @IonicPage()
@@ -9,7 +10,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MenuPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalService: ModalServiceProvider) {
+  }
+
+  openNewModal(){
+    this.modalService.openNewFileModal();
+  }
+
+  openSettingsModal(){
+    this.modalService.openSettingsModal();
   }
 
 

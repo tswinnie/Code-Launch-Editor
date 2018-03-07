@@ -1,3 +1,4 @@
+import { ModalServiceProvider } from './../modal-service/modal-service';
 import { MonacoServiceProvider } from './../monaco-service/monaco-service';
 import { EditorPage } from './../../pages/editor/editor';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
@@ -21,6 +22,7 @@ describe('Editor Tab and Monaco Test', () => {
   let mockEditorWindow: EditorWindowMock;
   let tabTarget: DebugElement;
   let monoaco: MonacoServiceProvider;
+  let modalService: ModalServiceProvider;
 
   let tab: HTMLElement;
 
@@ -44,6 +46,10 @@ describe('Editor Tab and Monaco Test', () => {
                   provide: MonacoServiceProvider,
                   useValue: monocoServiceStub
               },
+              {
+                provide: ModalServiceProvider,
+                useValue: modalService
+            },
 
           ]
       });

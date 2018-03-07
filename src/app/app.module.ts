@@ -12,6 +12,7 @@ import { EditorPage } from '../pages/editor/editor';
 import { NotificationBarPage } from '../pages/notification-bar/notification-bar';
 import { EditorWindowProvider } from '../providers/editor-window/editor-window';
 import { MonacoServiceProvider } from '../providers/monaco-service/monaco-service';
+import { ModalServiceProvider } from '../providers/modal-service/modal-service';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MonacoServiceProvider } from '../providers/monaco-service/monaco-servic
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     EditorWindowProvider,
     MonacoServiceProvider,
+    ModalServiceProvider,
 
 
 
