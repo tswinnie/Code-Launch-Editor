@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import * as editiorOptions from '../../editor-options/editor_options.json';
 
 declare const monaco: any;
 declare const require: any;
@@ -7,6 +8,9 @@ declare const require: any;
 @Injectable()
 
 export class MonacoServiceProvider {
+  private editorWith: number = 0;
+   options: any;
+
   @ViewChild('editor') editorContent: ElementRef;
   @Input() language: string;
   @Input() set value(v: string) {
@@ -22,7 +26,10 @@ export class MonacoServiceProvider {
   private _value = '';
   public _theme = '';
 
-  constructor() {}
+
+  constructor() {
+     this.options = (<any>editiorOptions);
+  }
 
   get value(): string {
       return this._value;
@@ -60,7 +67,7 @@ export class MonacoServiceProvider {
 
 
   // Will be called once monaco library is available
-  initMonaco(editorID: string) {
+  initMonaco(editorID: string, fileExtension: string) {
       let myDiv: any;
       let divITems = document.getElementById("parent-body").querySelectorAll("div");
       for (var i = 0; i < divITems.length; i++) {
@@ -71,25 +78,85 @@ export class MonacoServiceProvider {
           }
       }
       this._editor = monaco.editor.create(myDiv, {
-          value: "<html>\n<head>\n<title></title>\n</head>\n<body>\n</body>\n</html>",
-          language: "html",
-          theme: "vs-light",
-          wordWrap: 'wordWrapColumn',
-          // wordWrapColumn: 40,
-          wordWrapMinified: true,
-          wrappingIndent: "indent",
-          lineNumbers: true
+
+          value: "",
+          language: fileExtension,
+          theme: this.options.theme,
+          wordWrap: this.options.wordWrap,
+          wordWrapColumn: this.options.wordWrapColumn,
+          wordWrapMinified: this.options.wordWrapMinified,
+          wrappingIndent: this.options.wrappingIndent,
+          lineNumbers: this.options.lineNumbers,
+          readOnly:  this.options.readOnly,
+          scrollBeyondLastLine:  this.options.scrollBeyondLastLine,
+          autoIndent:  this.options.autoIndent,
+          cursorBlinking:  this.options.cursorBlinking,
+          folding:  this.options.folding,
+          fontFamily:  this.options.fontFamily,
+          fontSize :  this.options.fontSize,
+          fontWeight :  this.options.fontWeight,
+          formatOnPaste:  this.options.formatOnPaste,
+          glyphMargin:  this.options.glyphMargin,
+          matchBrackets:  this.options.matchBrackets,
+          parameterHints:  this.options.parameterHints,
+          quickSuggestions:  this.options.quickSuggestions,
+          roundedSelection:  this.options.roundedSelection,
+          showFoldingControls:  this.options.showFoldingControls,
+          tabSize:  this.options.tabSize,
+          insertSpaces:  this.options.insertSpaces,
+          autoSave:  this.options.autoSave,
+          detectIndentation:  this.options.detectIndentation,
+          useTabStops:  this.options.useTabStops,
+          colorDecorators:  this.options.colorDecorators,
+          scrollbar: {
+            // Subtle shadows to the left & top. Defaults to true.
+            useShadows: false,
+            // Render vertical arrows. Defaults to false.
+            verticalHasArrows: false,
+            // Render horizontal arrows. Defaults to false.
+            horizontalHasArrows: false,
+            // Render vertical scrollbar.
+            // Accepted values: 'auto', 'visible', 'hidden'.
+            // Defaults to 'auto'
+            vertical: 'hidden',
+            // Render horizontal scrollbar.
+            // Accepted values: 'auto', 'visible', 'hidden'.
+            // Defaults to 'auto'
+            horizontal: 'hidden',
+            verticalScrollbarSize: 17,
+            horizontalScrollbarSize: 17,
+            arrowSize: 30
+          }
       });
+
       this._editor.getModel().onDidChangeContent((e) => {
+        let currentLineNumber: number = 1;
           this.updateValue(this._editor.getModel().getValue());
+          currentLineNumber = e.versionId;
+          // console.log(this._editor.getPosition().lineNumber);
+          currentLineNumber = this._editor.getPosition().lineNumber;
+
       });
 
-      if (myDiv.classList.contains('hide')) {
-          //get the editor and resume state
-
-      }
 
   }
+
+  //this method will be tied to the setting menu and will be called on save when user changes settings
+  //this method will pass form data from the settings form to the updateOptions() in editor-options service
+  //the updateOptions() wiil then write the new settings to the editor_options.json file and then call the getOptions()
+  //and set a var = to the results of getOptions() and then return that value and return that value in updateOptions()
+  //in the updateEditorOptions() I will set a var = to the return value of updateOptions()
+  //the call this._editor.getModel() instance and set options with new options returned
+  //then finally call editorUpdate() which is a method from monaco editor
+  updateEditorOptions(option:string){
+    monaco.editor.setTheme(option);
+
+  	// this._editor.updateOptions({
+    //   thme: "vs-dark",
+    //   lineNumbers: false
+    // });
+  }
+
 
   tabActivated(targetTab: string) {
       this._editor.getModel().restoreViewState;

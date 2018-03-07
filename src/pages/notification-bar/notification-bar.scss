@@ -7,5 +7,7 @@ page-notification-bar {
     background-color: #e53835;
     padding: 9px;
     color: #fff;
+    position: relative;
+    z-index: 9;
   }
 }
