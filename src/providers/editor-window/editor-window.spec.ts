@@ -8,6 +8,8 @@ import { DebugElement }    from '@angular/core';
 import { PlatformMock, StatusBarMock, SplashScreenMock } from '../../../test-config/mocks-ionic';
 import { EditorWindowProvider } from '../editor-window/editor-window';
 import { EditorWindowMock } from './editor-window.mock';
+import { File } from '@ionic-native/file';
+import { SharedServiceProvider } from '../shared-service/shared-service';
 
 describe('Editor Tab and Monaco Test', () => {
   let comp: EditorPage;
@@ -23,7 +25,9 @@ describe('Editor Tab and Monaco Test', () => {
   let tabTarget: DebugElement;
   let monoaco: MonacoServiceProvider;
   let modalService: ModalServiceProvider;
-
+  let file: File;
+  let platform: Platform;
+  let sharedService: SharedServiceProvider;
   let tab: HTMLElement;
 
   beforeEach(async (() => {
@@ -50,6 +54,18 @@ describe('Editor Tab and Monaco Test', () => {
                 provide: ModalServiceProvider,
                 useValue: modalService
             },
+            {
+              provide: File,
+              useValue: file
+          },
+          {
+            provide: Platform,
+            useValue: platform
+        },
+        {
+        provide: SharedServiceProvider,
+        useValue: sharedService
+        },
 
           ]
       });
@@ -63,8 +79,8 @@ describe('Editor Tab and Monaco Test', () => {
       editorWindow = fixture.debugElement.injector.get(EditorWindowProvider);
       monacoService = fixture.debugElement.injector.get(MonacoServiceProvider);
 
-      monacoService = new MonacoServiceProvider();
-      editorWindow = new EditorWindowProvider(monacoService);
+      // monacoService = new MonacoServiceProvider();
+      editorWindow = new EditorWindowProvider(monacoService,file,platform);
 
       mockEditorWindow = new EditorWindowMock();
       monoaco = new monacoService.loadMonaco();

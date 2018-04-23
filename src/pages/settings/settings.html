@@ -13,36 +13,152 @@
 
     </ion-header>
 
-
     <ion-content padding class="modal-content">
       <!-- add new file form -->
         <form [formGroup]="optionData" (ngSubmit)="updateSettings()">
             <ion-item>
-              <div class="form-group">
-                <label for="theme" >Editor Theme:</label>
-
-                <select class="form-control" id="theme" formControlName="themeName">
-                    <option *ngFor="let option of themes" [value]="option"  [selected]="option">{{option}}</option>
-                    <option value="vs-light" *ngIf="show">vs-light</option>
-                    <option value="vs-dark">vs-dark</option>
-                  </select>
-              </div>
-
-              <!-- <div class="form-group">
-                  <label for="theme" >Word Wrap :</label>
-                  <select class="form-control" id="wordWrap" >
-                    <option *ngFor="let wrapOptions of wordWrapOptions" [value]="wrapOptions">{{ wrapOptions }}</option>
-                  </select>
-                </div> -->
-
-                <!-- <div class="form-group">
-                    <label for="theme" >Word Wrap Column:</label>
-                    <select class="form-control" id="wordWrapColumn" >
-                      <option *ngFor="let columnOption of wordWrapColumnOptions" [value]="columnOption">{{ columnOption }}</option>
-                    </select>
-                  </div> -->
-
+                <!-- themes -->
+                <ion-label for="theme" >Editor Theme</ion-label>
+                <ion-select class="form-control" id="theme" formControlName="theme">
+                    <ion-option *ngFor="let option of defaultOptions.theme" [value]="option">{{option}}</ion-option>
+                </ion-select>
             </ion-item>
-            <button ion-button type="submit" [disabled]="!optionData.valid">Save</button>
+            <!-- end of themes -->
+
+            <ion-item>
+              <!-- themes -->
+              <ion-label for="theme" >Tab Size</ion-label>
+              <ion-select class="form-control" id="theme" formControlName="tabSize">
+                  <ion-option *ngFor="let option of defaultOptions.tabSize" [value]="option">{{option}}</ion-option>
+              </ion-select>
+              <!-- end of themes -->
+          </ion-item>
+
+          <ion-item>
+            <!-- themes -->
+            <ion-label for="theme" >Font Size</ion-label>
+            <ion-select class="form-control" id="theme" formControlName="fontSize">
+                <ion-option *ngFor="let option of defaultOptions.fontSize" [value]="option">{{option}}</ion-option>
+            </ion-select>
+            <!-- end of themes -->
+        </ion-item>
+
+
+
+      <ion-item>
+        <!-- themes -->
+        <ion-label for="theme" >Font Weight</ion-label>
+        <ion-select class="form-control" id="theme" formControlName="fontWeight">
+            <ion-option *ngFor="let option of defaultOptions.fontWeight" [value]="option">{{option}}</ion-option>
+        </ion-select>
+        <!-- end of themes -->
+    </ion-item>
+
+              <ion-item>
+                <ion-label>Word Wrap Minified</ion-label>
+                <ion-toggle formControlName="wordWrapMinified"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Wrapping Indent</ion-label>
+                <ion-toggle formControlName="wrappingIndent"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Line Numbers</ion-label>
+                <ion-toggle formControlName="lineNumbers"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+              <ion-label>Read Only</ion-label>
+              <ion-toggle formControlName="readOnly"></ion-toggle>
+            </ion-item>
+
+            <ion-item>
+            <ion-label>Scroll Beyond Last Line</ion-label>
+            <ion-toggle formControlName="scrollBeyondLastLine"></ion-toggle>
+          </ion-item>
+
+
+        <ion-item>
+          <ion-label>Auto Indent</ion-label>
+          <ion-toggle formControlName="autoIndent"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Cursor Blinking</ion-label>
+          <ion-toggle formControlName="cursorBlinking"></ion-toggle>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label>Code Folding</ion-label>
+          <ion-toggle formControlName="folding"></ion-toggle>
+        </ion-item>
+
+    <ion-item>
+      <ion-label>Format On Paste</ion-label>
+      <ion-toggle formControlName="formatOnPaste"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Show Glyphs</ion-label>
+      <ion-toggle formControlName="glyphMargin"></ion-toggle>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Match Brackets</ion-label>
+      <ion-toggle formControlName="matchBrackets"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Parameter Hints</ion-label>
+      <ion-toggle formControlName="parameterHints"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Quick Suggestions</ion-label>
+      <ion-toggle formControlName="quickSuggestions"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Rounded Selection</ion-label>
+      <ion-toggle formControlName="roundedSelection"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Show Folding Controls</ion-label>
+      <ion-toggle formControlName="showFoldingControls"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Insert Spaces</ion-label>
+      <ion-toggle formControlName="insertSpaces"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Auto Save</ion-label>
+      <ion-toggle formControlName="autoSave"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Detect Indentation</ion-label>
+      <ion-toggle formControlName="detectIndentation"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Use Tab Stops</ion-label>
+      <ion-toggle formControlName="useTabStops"></ion-toggle>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Color Decorators</ion-label>
+      <ion-toggle formControlName="colorDecorators"></ion-toggle>
+    </ion-item>
+
+
+            <button ion-button type="submit" >Save</button>
           </form>
     </ion-content>

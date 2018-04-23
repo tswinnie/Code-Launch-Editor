@@ -1,13 +1,24 @@
+import { Direct } from 'protractor/built/driverProviders';
+import { dirname } from 'path';
 import { Injectable,  NgZone } from '@angular/core';
 import { MonacoServiceProvider } from '../../providers/monaco-service/monaco-service';
+import { DirectoryEntry, File, FileEntry } from '@ionic-native/file';
+import { Platform } from 'ionic-angular';
+
 @Injectable()
 export class EditorWindowProvider {
   counter: any = 0;
+  dirPath: any;
+  filentry: DirectoryEntry;
+  dataResult: any;
 
-  constructor(public monaco: MonacoServiceProvider) {
+
+
+  constructor(public monaco: MonacoServiceProvider,public file:File, public platform:Platform) {
       this.monaco.loadMonaco();
 
   }
+
 
 
   //initialize tab
@@ -63,13 +74,27 @@ export class EditorWindowProvider {
                   currentBody[p].classList.remove('hide');
               }
           }
-          this.monaco.initMonaco(newTabBody.id, fileExtension);
-          //scroll to new tab one container overflows
-          newTab.scrollIntoView({
-              behavior: "instant",
-              block: "end",
-              inline: "end"
-          });
+
+          //get data from settings.json file
+          this.platform.ready().then(() => {
+            this.file.readAsText(this.file.dataDirectory+"Settings", "user_selected_settings.json")
+              .then((data) =>{
+                this.dataResult = JSON.parse(data);
+                    // this.readFromFile("settings.json","dataDirectory","Settings");
+                    this.monaco.initMonaco(newTabBody.id, fileExtension, this.dataResult);
+                    //scroll to new tab one container overflows
+                    newTab.scrollIntoView({
+                      behavior: "instant",
+                      block: "end",
+                      inline: "end"
+                    });
+
+                    }).catch(error =>{
+                      console.log(error);
+                  });
+            });
+
+
 
 
       }
@@ -188,4 +213,130 @@ export class EditorWindowProvider {
 
   }
 
+  //create folder service
+  createFolder(dirLocation:any, dirName:string){
+    console.log('about to create direcoty');
+        this.platform.ready().then(() => {
+            this.file.createDir(dirLocation, dirName, true)
+            .then(() => {
+              console.log(dirName+' successfully created!');
+              alert(dirName+' successfully created!');
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("error creating directory")
+
+            });
+      });
+  }
+
+  //create write file service
+  writeNewFile(dirLocation:any, dirName:string, fileName:string, fileData:any){
+    this.platform.ready().then(() => {
+      //create directory to hold new file
+      let result = this.file.createDir(dirLocation, dirName, true)
+      //get dir location and then wirte to file
+      result.then(data => {
+          this.dirPath = data.toURL(); //set dirPath = to data url
+          console.log(this.dirPath);
+          //check which type of file we should write
+          this.file.writeFile(this.dirPath, fileName, fileData, {replace: true});
+          //check that file was created
+          this.checkFile(this.dirPath, fileName);
+
+
+      }).catch(error =>{
+
+        alert("error: " + error);
+      })
+
+    });
+
+
+
+  }
+
+  //method to check if file exist
+  checkFile(fileDirectory:any, fileName:string){
+    this.platform.ready().then(() => {
+      this.file.checkFile(fileDirectory, fileName).then(_ => alert(fileName + ' exists')).catch(err => alert(fileName + ' does not exist'));
+    });
+  }
+
+  //read data from file
+  readFromFile(fileName:string, directoryType:string, directoryName:string){
+    if(directoryType == "dataDirectory"){
+      this.platform.ready().then(() => {
+           this.file.readAsText(this.file.dataDirectory+directoryName, fileName)
+             .then((data) =>{
+               this.dataResult = data;
+
+             }).catch(error =>{
+                console.log(error);
+             });
+      });
+
+    }
+    if(directoryType == "documents"){
+      this.platform.ready().then(() => {
+        this.file.readAsText(this.file.documentsDirectory+directoryName, fileName)
+           .then((data) =>{
+            let convertedData = JSON.stringify(data);
+            let dataResult = JSON.parse(convertedData);
+            // alert(dataResult);
+            //pass settings data to shaerdService()
+
+        }).catch(error =>{
+           let readError = JSON.stringify(error);
+           alert(readError);
+      })
+
+    });
+   }
+
+  }
+
 }
+
+
+
+
+
+
+        // this.file.resolveDirectoryUrl(this.file.dataDirectory+directoryName)
+        // .then((directoryEntry: DirectoryEntry) => {
+        //   this.file.getFile(directoryEntry, fileName, { create: false })
+        //   .then((fileEntry: FileEntry) => {
+
+        //     let newFilePath = String(fileEntry.toURL());
+
+        //     this.file.readAsText(this.file.dataDirectory+directoryName, fileName)
+        //     .then((data) =>{
+        //       alert("read data");
+        //       alert(data);
+        //     }).catch(error =>{
+        //       let readError = JSON.stringify(error);
+        //       alert(readError);
+        //     })
+        //   });
+        // });
+
+            // let text = this.file.readAsText(this.dirPath, fileName)
+            // .then(data =>{
+
+            //   alert(text);
+
+            // }).catch(error =>{
+            //   alert(error);
+            // });
+
+
+        // let result = this.file.readAsText(pathToFile, fileName)
+        // result.then(data =>{
+        //   console.log(data);
+        // console.log(result);
+        // alert('file should have been read');
+        // }).catch(error =>{
+
+        //   alert("error" + error);
+        // });

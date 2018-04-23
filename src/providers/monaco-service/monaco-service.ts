@@ -1,15 +1,19 @@
+import { Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { File } from '@ionic-native/file';
 import * as editiorOptions from '../../editor-options/editor_options.json';
 
 declare const monaco: any;
 declare const require: any;
+
 
 @Injectable()
 
 export class MonacoServiceProvider {
   private editorWith: number = 0;
    options: any;
+
 
   @ViewChild('editor') editorContent: ElementRef;
   @Input() language: string;
@@ -27,8 +31,15 @@ export class MonacoServiceProvider {
   public _theme = '';
 
 
-  constructor() {
+  constructor(public file: File, public platform:Platform ) {
      this.options = (<any>editiorOptions);
+
+
+    //get settings from settings.json in dataDirectory
+    // let optionData = this.editor.readFromFile("settings.json","dataDirectory","Settings");
+
+    // alert(optionData);
+
   }
 
   get value(): string {
@@ -38,6 +49,25 @@ export class MonacoServiceProvider {
   ngOnInit() {
 
   }
+
+  // loadSettingsFile(){
+  //   //check that settings have been loaded and saved in the Settings directory
+  //   this.platform.ready().then(() => {
+  //   let pathToFile = this.file.dataDirectory+"Settings";
+  //   let fileName = "settings.json";
+  //     this.file.checkFile(pathToFile, fileName)
+  //     .then(_ => {
+  //       alert(fileName + ' exists');
+  //     }) .catch(err => {
+  //       alert("error" + JSON.stringify(err));
+  //       alert(fileName + ' does not exist');
+  //       alert("the directory name is " + pathToFile);
+  //       console.log(pathToFile);
+  //       //need to create the directory and file
+  //     });
+  //   });
+
+  // }
 
 
   loadMonaco() {
@@ -64,11 +94,18 @@ export class MonacoServiceProvider {
       }
   }
 
+  getEditorOptions():any{
+    return this.options;
+  }
+
+
+
 
 
   // Will be called once monaco library is available
-  initMonaco(editorID: string, fileExtension: string) {
+  initMonaco(editorID: string, fileExtension: string, editorSettings:any) {
       let myDiv: any;
+      this.options = editorSettings; //pass editor options
       let divITems = document.getElementById("parent-body").querySelectorAll("div");
       for (var i = 0; i < divITems.length; i++) {
 
@@ -78,36 +115,35 @@ export class MonacoServiceProvider {
           }
       }
       this._editor = monaco.editor.create(myDiv, {
-
           value: "",
           language: fileExtension,
-          theme: this.options.theme,
-          wordWrap: this.options.wordWrap,
-          wordWrapColumn: this.options.wordWrapColumn,
-          wordWrapMinified: this.options.wordWrapMinified,
-          wrappingIndent: this.options.wrappingIndent,
-          lineNumbers: this.options.lineNumbers,
-          readOnly:  this.options.readOnly,
-          scrollBeyondLastLine:  this.options.scrollBeyondLastLine,
-          autoIndent:  this.options.autoIndent,
-          cursorBlinking:  this.options.cursorBlinking,
-          folding:  this.options.folding,
-          fontFamily:  this.options.fontFamily,
-          fontSize :  this.options.fontSize,
-          fontWeight :  this.options.fontWeight,
-          formatOnPaste:  this.options.formatOnPaste,
-          glyphMargin:  this.options.glyphMargin,
-          matchBrackets:  this.options.matchBrackets,
-          parameterHints:  this.options.parameterHints,
-          quickSuggestions:  this.options.quickSuggestions,
-          roundedSelection:  this.options.roundedSelection,
-          showFoldingControls:  this.options.showFoldingControls,
-          tabSize:  this.options.tabSize,
-          insertSpaces:  this.options.insertSpaces,
-          autoSave:  this.options.autoSave,
-          detectIndentation:  this.options.detectIndentation,
-          useTabStops:  this.options.useTabStops,
-          colorDecorators:  this.options.colorDecorators,
+          theme: editorSettings.theme,
+          wordWrap: editorSettings.wordWrap,
+          wordWrapColumn: editorSettings.wordWrapColumn,
+          wordWrapMinified: editorSettings.wordWrapMinified,
+          wrappingIndent: editorSettings.wrappingIndent,
+          lineNumbers: editorSettings.lineNumbers,
+          readOnly:  editorSettings.readOnly,
+          scrollBeyondLastLine: editorSettings.scrollBeyondLastLine,
+          autoIndent:  editorSettings.autoIndent,
+          cursorBlinking:  editorSettings.cursorBlinking,
+          folding:  editorSettings.folding,
+          fontFamily:  editorSettings.fontFamily,
+          fontSize :  editorSettings.fontSize,
+          fontWeight :  editorSettings.fontWeight,
+          formatOnPaste:  editorSettings.formatOnPaste,
+          glyphMargin:  editorSettings.glyphMargin,
+          matchBrackets: editorSettings.matchBrackets,
+          parameterHints:  editorSettings.parameterHints,
+          quickSuggestions:  editorSettings.quickSuggestions,
+          roundedSelection:  editorSettings.roundedSelection,
+          showFoldingControls:  editorSettings.showFoldingControls,
+          tabSize:  editorSettings.tabSize,
+          insertSpaces:  editorSettings.insertSpaces,
+          autoSave:  editorSettings.autoSave,
+          detectIndentation:  editorSettings.detectIndentation,
+          useTabStops:  editorSettings.useTabStops,
+          colorDecorators:  editorSettings.colorDecorators,
           scrollbar: {
             // Subtle shadows to the left & top. Defaults to true.
             useShadows: false,
@@ -148,13 +184,49 @@ export class MonacoServiceProvider {
   //in the updateEditorOptions() I will set a var = to the return value of updateOptions()
   //the call this._editor.getModel() instance and set options with new options returned
   //then finally call editorUpdate() which is a method from monaco editor
-  updateEditorOptions(option:string){
-    monaco.editor.setTheme(option);
+  updateEditorOptions(updatedOptions:any){
 
-  	// this._editor.updateOptions({
-    //   thme: "vs-dark",
-    //   lineNumbers: false
-    // });
+//write the data to the settings.json file
+    this.platform.ready().then(() => {
+      let result = this.file.createDir(this.file.dataDirectory, "Settings", true)
+      result.then(data => {
+         let dirPath = data.toURL(); //set dirPath = to data url
+          this.file.writeFile(dirPath, "user_selected_settings.json", JSON.stringify(updatedOptions), {replace: true});
+
+      }).catch(error =>{
+
+        alert("error: " + error);
+      })
+
+    });
+    monaco.editor.setTheme(updatedOptions.theme);
+  	this._editor.updateOptions({
+      wordWrap: updatedOptions.wordWrap,
+      wordWrapColumn: updatedOptions.wordWrapColumn,
+      wordWrapMinified: updatedOptions.wordWrapMinified,
+      wrappingIndent: updatedOptions.wrappingIndent,
+      lineNumbers: updatedOptions.lineNumbers,
+      readOnly:  updatedOptions.readOnly,
+      scrollBeyondLastLine: updatedOptions.scrollBeyondLastLine,
+      autoIndent:  updatedOptions.autoIndent,
+      cursorBlinking:  updatedOptions.cursorBlinking,
+      folding:  updatedOptions.folding,
+      fontSize :  updatedOptions.fontSize,
+      fontWeight :  updatedOptions.fontWeight,
+      formatOnPaste:  updatedOptions.formatOnPaste,
+      glyphMargin:  updatedOptions.glyphMargin,
+      matchBrackets: updatedOptions.matchBrackets,
+      parameterHints:  updatedOptions.parameterHints,
+      quickSuggestions:  updatedOptions.quickSuggestions,
+      roundedSelection:  updatedOptions.roundedSelection,
+      showFoldingControls:  updatedOptions.showFoldingControls,
+      tabSize:  updatedOptions.tabSize,
+      insertSpaces:  updatedOptions.insertSpaces,
+      autoSave:  updatedOptions.autoSave,
+      detectIndentation:  updatedOptions.detectIndentation,
+      useTabStops:  updatedOptions.useTabStops,
+      colorDecorators:  updatedOptions.colorDecorators,
+    });
   }
 
 
@@ -194,6 +266,9 @@ export class MonacoServiceProvider {
 
 
 
+
+
+
   onChange(_) {}
   onTouched() {}
   registerOnChange(fn) {
@@ -203,5 +278,16 @@ export class MonacoServiceProvider {
       this.onTouched = fn;
   }
 
+
+  jsonify(o){
+    var seen=[];
+    var jso=JSON.stringify(o, function(k,v){
+        if (typeof v =='object') {
+            if ( !seen.indexOf(v) ) { return '__cycle__'; }
+            seen.push(v);
+        } return v;
+    });
+    return jso;
+};
 
 }
