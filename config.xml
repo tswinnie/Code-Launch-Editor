@@ -84,4 +84,9 @@
     <allow-navigation href="http://192.168.0.9:8101" />
     <engine name="ios" spec="^4.5.4" />
     <allow-navigation href="http://192.168.0.9:8100" />
+    <allow-navigation href="http://192.168.0.6:8100" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <allow-navigation href="http://192.168.2.233:8100" />
+    <allow-navigation href="http://192.168.43.90:8100" />
+    <allow-navigation href="http://192.168.3.212:8100" />
 </widget>

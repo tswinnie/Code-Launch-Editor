@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -13,6 +13,14 @@ import { NotificationBarPage } from '../pages/notification-bar/notification-bar'
 import { EditorWindowProvider } from '../providers/editor-window/editor-window';
 import { MonacoServiceProvider } from '../providers/monaco-service/monaco-service';
 import { ModalServiceProvider } from '../providers/modal-service/modal-service';
+import { File } from '@ionic-native/file';
+import { SharedServiceProvider } from '../providers/shared-service/shared-service';
+
+
+// export function init_settings(monacoService: MonacoServiceProvider, file: File) {
+//   return () => monacoService.loadSettingsFile();
+// }
+
 
 @NgModule({
   declarations: [
@@ -21,7 +29,8 @@ import { ModalServiceProvider } from '../providers/modal-service/modal-service';
     MenuPage,
     TreeViewPage,
     EditorPage,
-    NotificationBarPage
+    NotificationBarPage,
+
 
   ],
 
@@ -41,12 +50,18 @@ import { ModalServiceProvider } from '../providers/modal-service/modal-service';
 
   ],
   providers: [
+    File,
+    MonacoServiceProvider,
+    // { provide: APP_INITIALIZER, useFactory: init_settings, deps: [MonacoServiceProvider, File], multi: true },
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     EditorWindowProvider,
-    MonacoServiceProvider,
     ModalServiceProvider,
+    SharedServiceProvider,
+    SharedServiceProvider,
+
+
 
 
 
